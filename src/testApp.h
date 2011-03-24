@@ -4,6 +4,7 @@
 
 #include "ofMain.h"
 #include "ofxOpenNI.h"
+#include "Flapper.h"
 
 
 class testApp : public ofBaseApp{
@@ -26,12 +27,7 @@ public:
     ofxImageGenerator	rgb;
     ofxUserGenerator	user;
     
-    int handHistoryDepth;
-    vector<ofPoint> leftHandHistory;
-    vector<ofPoint> rightHandHistory;	
-	
-    ofPoint leftHand;
-    ofPoint rightHand;
+    Flapper * flappers;
     
     int playDelay;
     int lastPlay;
@@ -39,13 +35,6 @@ public:
     ofSoundPlayer accordionBreath;
     ofSoundPlayer valkyries;
     ofSoundPlayer flap;
-    
-    
-    float lastAverageRightVelocity, lastAverageLeftVelocity;
-    float averageRightVelocity, averageLeftVelocity;    
-    ofPoint averageLeftPoint, averageRightPoint;
-    
-    float rightDistance, leftDistance, oldLeftDistance, oldRightDistance, leftTop, leftBottom, rightTop, rightBottom, oldRightTop, oldRightBottom, maintainRightTop, maintainRightBottom,  leftVelocity, rightVelocity, leftFlapSize, rightFlapSize;
     
 };
 

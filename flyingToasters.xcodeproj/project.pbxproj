@@ -11,6 +11,7 @@
 		2590FC80131CBCAA0001A8BF /* ofxMatrix4x4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2590FC74131CBCAA0001A8BF /* ofxMatrix4x4.cpp */; };
 		2590FC81131CBCAA0001A8BF /* ofxQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2590FC79131CBCAA0001A8BF /* ofxQuaternion.cpp */; };
 		2590FCFD131CBFDD0001A8BF /* libTinyXml.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2590FCFC131CBFDD0001A8BF /* libTinyXml.dylib */; };
+		25E0BF33133B092C00901BB8 /* Flapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25E0BF31133B092C00901BB8 /* Flapper.cpp */; };
 		25E36EE9131CB1D300796632 /* ofxDirList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25E36EE7131CB1D300796632 /* ofxDirList.cpp */; };
 		25E52758131D7DCC00EFD3A2 /* guiBaseObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25E5271D131D7DCC00EFD3A2 /* guiBaseObject.cpp */; };
 		25E52759131D7DCC00EFD3A2 /* guiCallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25E5271F131D7DCC00EFD3A2 /* guiCallback.cpp */; };
@@ -153,6 +154,8 @@
 		2590FC7D131CBCAA0001A8BF /* ofxVec4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxVec4f.h; path = ../../../addons/ofxVectorMath/src/ofxVec4f.h; sourceTree = SOURCE_ROOT; };
 		2590FC7E131CBCAA0001A8BF /* ofxVectorMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxVectorMath.h; path = ../../../addons/ofxVectorMath/src/ofxVectorMath.h; sourceTree = SOURCE_ROOT; };
 		2590FCFC131CBFDD0001A8BF /* libTinyXml.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libTinyXml.dylib; sourceTree = "<group>"; };
+		25E0BF31133B092C00901BB8 /* Flapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Flapper.cpp; sourceTree = "<group>"; };
+		25E0BF32133B092C00901BB8 /* Flapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flapper.h; sourceTree = "<group>"; };
 		25E36EE4131CB1D300796632 /* Instructions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Instructions.txt; sourceTree = "<group>"; };
 		25E36EE5131CB1D300796632 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		25E36EE7131CB1D300796632 /* ofxDirList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDirList.cpp; sourceTree = "<group>"; };
@@ -1011,6 +1014,8 @@
 				25F72B4E131CB8FF00C539F5 /* testApp.cpp */,
 				25F72AEE131CB88D00C539F5 /* utils */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
+				25E0BF32133B092C00901BB8 /* Flapper.h */,
+				25E0BF31133B092C00901BB8 /* Flapper.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1229,6 +1234,7 @@
 				25E52770131D7DCC00EFD3A2 /* simpleColor.cpp in Sources */,
 				25E52771131D7DCC00EFD3A2 /* simpleFileLister.cpp in Sources */,
 				25E52772131D7DCC00EFD3A2 /* simpleLogger.cpp in Sources */,
+				25E0BF33133B092C00901BB8 /* Flapper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
