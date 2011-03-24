@@ -20,6 +20,9 @@ public:
     virtual void draw();    
     void updateHands(ofPoint leftHand, ofPoint rightHand);
     float flapPower;
+    bool active;
+    int gracePeriod;
+    int timeLastHandUpdate;
     
 private:
     int color;
@@ -40,6 +43,7 @@ private:
     float lastAverageLeftVelocity, lastAverageRightVelocity;    
     ofPoint averageLeftPoint, averageRightPoint;
     float wingAngle;
+    float leftCurrent, rightCurrent;
     float leftBottom, rightBottom;
     float leftTop, rightTop;
     float leftFlapSize, rightFlapSize;
@@ -49,5 +53,10 @@ private:
     // sound fx
     ofSoundPlayer flap1;
     ofSoundPlayer flap2;    
+    
+    // sprites
+    int spriteCount;
+    ofImage * sprites;
+    ofImage * activeSprite;
 
 };

@@ -12,14 +12,16 @@ Flapper::Flapper() {
     // constructor
 	cout << "Creating flapper" << endl;
     
+    active = false;
+    
     handHistoryDepth = 10; // store the last 10 hand positions, newest first
     
     averageLeftVelocity, averageRightVelocity = 0;
     leftFlapReversalTime, rightFlapReversalTime = 0;
-    leftFlapSpeed, rightFlapSpeed = 0;    
+    leftFlapSpeed, rightFlapSpeed = 0;
 
-    x = ofGetWidth() / 2;
-    y = ofGetHeight();
+    x = ofGetWidth();
+    y = 0;
     
     vX = 0;
     vY = 0;
@@ -32,9 +34,25 @@ Flapper::Flapper() {
     color = round(ofRandom(0, 255));
     
     flap1.loadSound("flap1.wav");
+    flap1.setVolume(0.5);
     flap1.setMultiPlay(true);
+
     flap2.loadSound("flap2.wav");
-    flap2.setMultiPlay(true);    
+    flap2.setVolume(0.5);    
+    flap2.setMultiPlay(true); 
+
+    
+    // load images
+    spriteCount = 20;
+    sprites = new ofImage[spriteCount];
+    for (int i = 0; i < spriteCount; i++) {
+        sprites[i].loadImage("roll" + ofToString(i + 1) + ".png");
+    }
+    
+    // wings level by defaut
+    activeSprite = &sprites[18];    
+    
+    gracePeriod = 10 * 1000;
 
 }
 
@@ -58,26 +76,68 @@ void Flapper::flapDown() {
 }
 
 void Flapper::update() {
-    vY += gravity;
-    
     x += vX;
-    y += vY;    
+    y += vY;
 
     
     // ground
-    if (y > ofGetHeight()) {
-        y = ofGetHeight();
+    if (y > (ofGetHeight() - activeSprite->getHeight())) {
+        y = ofGetHeight() - activeSprite->getHeight();
         vY = 0;
     }
+    
+    if(active && ((ofGetElapsedTimeMillis() - timeLastHandUpdate) > gracePeriod)) {
+        active = false;
+        cout << " GRACE PERIOD IS OVER " << endl;
+    }
+    
+    if(active) {
+        vX = -1;
+        vY += gravity;        
+    }
+    else {
+        vX = 0;
+        activeSprite = &sprites[0];
+    }
+    
+    // which third of the arc are we in
+    
+
+    float flapPercent = leftCurrent / (leftBottom - leftTop + .001);
+    
+    if(active) cout << "FLAP PERCENT: " << flapPercent << endl;
+    
+    if(flapPercent < 33) {
+        // wings down
+        activeSprite = &sprites[19];
+    }
+    else if ((flapPercent >= 33) && (flapPercent <= 66)) {
+        // wings level
+        activeSprite = &sprites[18];
+    }
+    else if (flapPercent > 66) {
+        // wings up
+        activeSprite = &sprites[17];        
+    }
+    
+    // loop the toaster
+    if ((x + activeSprite->getWidth()) < 0) {
+        x = ofGetWidth();
+        y = 0;
+    }    
+    
 }
 
 void Flapper::draw() {
-    ofSetColor(color, color, color);
-    ofCircle(ofGetWidth() / 2, y, 20);
+    activeSprite->draw(x, y);
     
 }
 
 void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
+    
+    active = true;
+    timeLastHandUpdate = ofGetElapsedTimeMillis();
+    
 	// add hand positions to history
 	if (leftHandHistory.size() <= handHistoryDepth) {
 		leftHandHistory.insert(leftHandHistory.begin(), leftHand);
@@ -126,6 +186,9 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
     
     // determine direction
     float velocityThreshold = 5;
+    
+    leftCurrent = leftHand.y;
+    rightCurrent = rightHand.y;    
     
     if ((averageLeftVelocity >= velocityThreshold) && (lastAverageLeftVelocity < velocityThreshold)) {
         //cout << "Left Starting down" << endl;

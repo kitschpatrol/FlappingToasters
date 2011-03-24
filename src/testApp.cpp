@@ -20,8 +20,12 @@ void testApp::setup() {
     
     
     // create flappers
-    flappers = new Flapper[15];    
+    flapperCount = 15;
+    flappers = new Flapper[flapperCount];    
     
+    // create toast
+    toastCount = 11;
+    toasts = new Toast[toastCount];        
     
     valkyries.loadSound("valkyries.wav");
 }
@@ -59,14 +63,20 @@ void testApp::update() {
             valkyries.setPosition(0.0);
         }             
     }
+
+    // update the toast
+    for (int i = 0; i < toastCount; i++) {
+        toasts[i].update();
+    }        
     
     // update the flappers
-    for (int i = 0; i < 15; i++) {
-        
+    for (int i = 0; i < flapperCount; i++) {
         flappers[i].flapPower = panel.getValueF("flapPower");
         flappers[i].gravity = panel.getValueF("gravity");
         flappers[i].update();
     }
+    
+
 }
 
 
@@ -82,17 +92,28 @@ void testApp::draw() {
 	user.drawUserMasks(0, 0);
 	glDisable(GL_BLEND);    
     
-    // draw the flappers
-    for (int i = 0; i < 15; i++) {
-        flappers[i].draw();
+    
+    ofEnableAlphaBlending();
+    // draw the toast
+    for (int i = 0; i < toastCount; i++) {
+        toasts[i].draw();
     }    
+    
+    // draw the flappers
+    for (int i = 0; i < flapperCount; i++) {
+        flappers[i].draw();
+    }
+    ofDisableAlphaBlending();
+
     
 
 }
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-    
+    if (key == 'f') {
+        ofToggleFullscreen();
+    }
 }
 
 

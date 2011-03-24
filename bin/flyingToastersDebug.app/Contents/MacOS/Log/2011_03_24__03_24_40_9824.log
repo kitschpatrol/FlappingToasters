@@ -1,0 +1,119 @@
+    2099	[INFO]	XnLog.cpp	165	OpenNI version is 1.0.0 (Build 25)-MacOSX (Jan  7 2011 14:20:18)
+    2158	[INFO]	XnLog.cpp	173	Log system initialized. Console: 1, File: 1, Severity: INFO, Masks: ALL
+    2194	[INFO]	XnLog.cpp	173	Log system initialized. Console: 1, File: 1, Severity: INFO, Masks: ALL
+   72112	[INFO]	XnUSBLinux-x86.cpp	98	USB is initialized.
+ 4098713	[INFO]	XnOpenNI.cpp	1261	Creating node 'Device1' of type Device...
+ 4100018	[INFO]	XnDeviceModule.cpp	431	Module 'Device' configuration was loaded from file.
+ 4552028	[INFO]	XnDeviceSensorIO.cpp	135	Connected to USB device
+ 4552086	[INFO]	XnProperty.cpp	151	Property Device.USBPath was changed to 045e/02ae@250/11.
+ 4559728	[INFO]	XnHostProtocol.cpp	825	Hardware versions: FW=5.1.4 (7) HW=4 Chip=2 Sensor=4 SYS=7
+ 5968065	[INFO]	XnProperty.cpp	151	Property Device.ID was changed to 0.
+ 5968139	[INFO]	XnSensor.cpp	182	Device sensor initialized
+ 5968251	[INFO]	XnOpenNI.cpp	1261	Creating node 'Depth1' of type Depth...
+ 5968308	[INFO]	XnDeviceBase.cpp	1383	Creating stream 'Depth1' of type 'Depth'...
+ 5968331	[INFO]	XnProperty.cpp	74	Setting Device.ReadData to 1...
+ 5968377	[INFO]	XnDeviceSensorIO.cpp	298	Endpoints open
+ 5980936	[INFO]	XnProperty.cpp	151	Property Device.ReadData was changed to 1.
+ 5980966	[INFO]	XnProperty.cpp	101	Device.ReadData was successfully set.
+ 5981364	[INFO]	XnProperty.cpp	151	Property Depth1.Resolution was changed to 0.
+ 5981386	[INFO]	XnProperty.cpp	151	Property Depth1.XRes was changed to 320.
+ 5981403	[INFO]	XnProperty.cpp	151	Property Depth1.YRes was changed to 240.
+ 5981422	[INFO]	XnProperty.cpp	151	Property Depth1.FPS was changed to 30.
+ 5981439	[INFO]	XnProperty.cpp	151	Property Depth1.OutputFormat was changed to 1.
+ 5981456	[INFO]	XnProperty.cpp	151	Property Depth1.BytesPerPixel was changed to 2.
+ 5981471	[INFO]	XnProperty.cpp	151	Property Depth1.RequiredDataSize was changed to 153600.
+ 5981488	[INFO]	XnProperty.cpp	151	Property Depth1.ParamCoeff was changed to 4.
+ 5981560	[INFO]	XnProperty.cpp	151	Property Depth1.ShiftScale was changed to 10.
+ 5994074	[INFO]	XnProperty.cpp	151	Property Depth1.ConstShift was changed to 200.
+ 5994143	[INFO]	XnProperty.cpp	151	Property Depth1.ZPD was changed to 120.
+ 5994250	[INFO]	XnProperty.cpp	151	Property Depth1.ZPPS was changed to 0.104200.
+ 5994268	[INFO]	XnProperty.cpp	151	Property Depth1.LDDIS was changed to 7.500000.
+ 5994375	[INFO]	XnProperty.cpp	151	Property Depth1.Gain was changed to 30.
+ 5994402	[INFO]	XnDeviceBase.cpp	1458	Stream 'Depth1' was initialized.
+ 5994418	[INFO]	XnDeviceBase.cpp	1463	'Depth1' stream was created.
+ 5994583	[INFO]	XnProperty.cpp	74	Setting Depth1.InputFormat to 3...
+ 5994606	[INFO]	XnProperty.cpp	151	Property Depth1.InputFormat was changed to 3.
+ 5994623	[INFO]	XnProperty.cpp	101	Depth1.InputFormat was successfully set.
+ 5995138	[INFO]	XnProperty.cpp	74	Setting Depth1.RegistrationType to 2...
+ 5995158	[INFO]	XnProperty.cpp	151	Property Depth1.RegistrationType was changed to 2.
+ 5995170	[INFO]	XnProperty.cpp	101	Depth1.RegistrationType was successfully set.
+ 5995788	[INFO]	XnDeviceModule.cpp	431	Module 'Depth1' configuration was loaded from file.
+ 5996026	[INFO]	XnProperty.cpp	74	Setting Depth1.FPS to 30...
+ 5996051	[INFO]	XnProperty.cpp	86	Depth1.FPS value did not change.
+ 5996069	[INFO]	XnProperty.cpp	74	Setting Depth1.YRes to 480...
+ 5996092	[INFO]	XnProperty.cpp	151	Property Depth1.Resolution was changed to 1.
+ 5996113	[INFO]	XnProperty.cpp	151	Property Depth1.XRes was changed to 640.
+ 5996131	[INFO]	XnProperty.cpp	151	Property Depth1.RequiredDataSize was changed to 307200.
+ 5996152	[INFO]	XnProperty.cpp	151	Property Depth1.YRes was changed to 480.
+ 5996171	[INFO]	XnProperty.cpp	151	Property Depth1.RequiredDataSize was changed to 614400.
+ 5996192	[INFO]	XnProperty.cpp	101	Depth1.YRes was successfully set.
+ 5996213	[INFO]	XnProperty.cpp	74	Setting Depth1.XRes to 640...
+ 5996230	[INFO]	XnProperty.cpp	86	Depth1.XRes value did not change.
+ 5996294	[INFO]	XnProperty.cpp	74	Setting Depth1.Mirror to 1...
+ 5996318	[INFO]	XnProperty.cpp	151	Property Depth1.FirmwareMirror was changed to 1.
+ 5996381	[INFO]	XnProperty.cpp	151	Property Depth1.Mirror was changed to 1.
+ 5996400	[INFO]	XnProperty.cpp	101	Depth1.Mirror was successfully set.
+ 9400078	[INFO]	XnOpenNI.cpp	1261	Creating node 'User1' of type User...
+ 9425041	[WARNING]	Linux-x86Threads.cpp	173	Failed to set thread priority: Invalid argument
+ 9425089	[WARNING]	XnUSBLinux-x86.cpp	126	USB events thread: Failed to set thread priority to critical. This might cause loss of data...
+ 9426039	[INFO]	XnUSBLinux-x86.cpp	1222	USB read thread was started.
+ 9426063	[INFO]	XnProperty.cpp	151	Property Depth1.ActualReadData was changed to 1.
+ 9896394	[INFO]	XnProperty.cpp	151	Property Depth1.State was changed to 1.
+ 9896437	[INFO]	XnDeviceBase.cpp	370	Stream Depth1 is open.
+13282238	[INFO]	XnOpenNI.cpp	1261	Creating node 'Image1' of type Image...
+13282301	[INFO]	XnDeviceBase.cpp	1383	Creating stream 'Image1' of type 'Image'...
+13282539	[INFO]	XnProperty.cpp	151	Property Image1.Resolution was changed to 0.
+13282559	[INFO]	XnProperty.cpp	151	Property Image1.XRes was changed to 320.
+13282572	[INFO]	XnProperty.cpp	151	Property Image1.YRes was changed to 240.
+13282585	[INFO]	XnProperty.cpp	151	Property Image1.FPS was changed to 30.
+13282596	[INFO]	XnProperty.cpp	151	Property Image1.OutputFormat was changed to 5.
+13282607	[INFO]	XnProperty.cpp	151	Property Image1.BytesPerPixel was changed to 3.
+13282619	[INFO]	XnProperty.cpp	151	Property Image1.RequiredDataSize was changed to 230400.
+13282653	[INFO]	XnDeviceBase.cpp	1458	Stream 'Image1' was initialized.
+13282672	[INFO]	XnDeviceBase.cpp	1463	'Image1' stream was created.
+13282802	[INFO]	XnProperty.cpp	74	Setting Image1.InputFormat to 6...
+13282825	[INFO]	XnProperty.cpp	151	Property Image1.InputFormat was changed to 6.
+13282837	[INFO]	XnProperty.cpp	101	Image1.InputFormat was successfully set.
+13283309	[INFO]	XnDeviceModule.cpp	431	Module 'Image1' configuration was loaded from file.
+13283413	[INFO]	XnProperty.cpp	74	Setting Image1.FPS to 30...
+13283431	[INFO]	XnProperty.cpp	86	Image1.FPS value did not change.
+13283444	[INFO]	XnProperty.cpp	74	Setting Image1.YRes to 480...
+13283461	[INFO]	XnProperty.cpp	151	Property Image1.Resolution was changed to 1.
+13283479	[INFO]	XnProperty.cpp	151	Property Image1.XRes was changed to 640.
+13283498	[INFO]	XnProperty.cpp	151	Property Image1.RequiredDataSize was changed to 460800.
+13283519	[INFO]	XnProperty.cpp	151	Property Image1.YRes was changed to 480.
+13283536	[INFO]	XnProperty.cpp	151	Property Image1.RequiredDataSize was changed to 921600.
+13283550	[INFO]	XnProperty.cpp	101	Image1.YRes was successfully set.
+13283562	[INFO]	XnProperty.cpp	74	Setting Image1.XRes to 640...
+13283573	[INFO]	XnProperty.cpp	86	Image1.XRes value did not change.
+13284631	[INFO]	XnUSBLinux-x86.cpp	1222	USB read thread was started.
+13284666	[INFO]	XnProperty.cpp	151	Property Image1.ActualReadData was changed to 1.
+13365327	[WARNING]	XnDepthProcessor.cpp	133	Read: Depth buffer is corrupt. Size is 592256 (!= 614400)
+13365377	[WARNING]	XnFrameStreamProcessor.cpp	132	Depth frame is corrupt!
+13465398	[WARNING]	XnDepthProcessor.cpp	133	Read: Depth buffer is corrupt. Size is 550800 (!= 614400)
+13465448	[WARNING]	XnFrameStreamProcessor.cpp	132	Depth frame is corrupt!
+13469423	[WARNING]	XnFirmwareStreams.cpp	324	Unknown packet type (0x4848)!!!
+13497345	[WARNING]	XnDepthProcessor.cpp	133	Read: Depth buffer is corrupt. Size is 581920 (!= 614400)
+13497376	[WARNING]	XnFrameStreamProcessor.cpp	132	Depth frame is corrupt!
+16365480	[WARNING]	XnDepthProcessor.cpp	133	Read: Depth buffer is corrupt. Size is 586672 (!= 614400)
+16365528	[WARNING]	XnFrameStreamProcessor.cpp	132	Depth frame is corrupt!
+16485140	[INFO]	XnProperty.cpp	151	Property Image1.State was changed to 1.
+16485185	[INFO]	XnDeviceBase.cpp	370	Stream Image1 is open.
+16485410	[INFO]	XnProperty.cpp	74	Setting Depth1.Registration to 1...
+16501390	[WARNING]	XnDepthProcessor.cpp	133	Read: Depth buffer is corrupt. Size is 584448 (!= 614400)
+16501437	[WARNING]	XnFrameStreamProcessor.cpp	132	Depth frame is corrupt!
+16513449	[WARNING]	XnFirmwareStreams.cpp	324	Unknown packet type (0x4948)!!!
+16533475	[WARNING]	XnDepthProcessor.cpp	133	Read: Depth buffer is corrupt. Size is 582096 (!= 614400)
+16533508	[WARNING]	XnFrameStreamProcessor.cpp	132	Depth frame is corrupt!
+16637918	[INFO]	XnProperty.cpp	151	Property Depth1.Registration was changed to 1.
+16637963	[INFO]	XnProperty.cpp	101	Depth1.Registration was successfully set.
+16638012	[INFO]	XnProperty.cpp	74	Setting Image1.Mirror to 1...
+16650405	[INFO]	XnProperty.cpp	151	Property Image1.FirmwareMirror was changed to 1.
+16650442	[INFO]	XnProperty.cpp	151	Property Image1.Mirror was changed to 1.
+16650454	[INFO]	XnProperty.cpp	101	Image1.Mirror was successfully set.
+67616052	[INFO]	XnOpenNI.cpp	1459	Destroying node 'User1'
+67623868	[INFO]	XnOpenNI.cpp	1459	Destroying node 'Depth1'
+67623957	[INFO]	XnDeviceBase.cpp	1507	Destroying stream 'Depth1'...
+67625083	[INFO]	XnOpenNI.cpp	1459	Destroying node 'Image1'
+67625125	[INFO]	XnDeviceBase.cpp	1507	Destroying stream 'Image1'...
+67626029	[INFO]	XnOpenNI.cpp	1459	Destroying node 'Device1'

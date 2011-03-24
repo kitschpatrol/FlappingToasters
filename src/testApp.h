@@ -5,6 +5,7 @@
 #include "ofMain.h"
 #include "ofxOpenNI.h"
 #include "Flapper.h"
+#include "Toast.h"
 #include "ofxAutoControlPanel.h"
 
 class testApp : public ofBaseApp{
@@ -26,8 +27,12 @@ public:
     ofxDepthGenerator	depth;
     ofxImageGenerator	rgb;
     ofxUserGenerator	user;
-    
+
+    int flapperCount;
     Flapper * flappers;
+    
+    int toastCount;
+    Toast * toasts;
     
 	ofxAutoControlPanel panel;    
     ofSoundPlayer valkyries;
