@@ -13,6 +13,7 @@ Flapper::Flapper() {
 	cout << "Creating flapper" << endl;
     
     active = false;
+    rollTimer = 0;
     
     handHistoryDepth = 10; // store the last 10 hand positions, newest first
     
@@ -107,17 +108,35 @@ void Flapper::update() {
     
     if(active) cout << "Left Current: " << leftCurrent << "\tLeft Top: " << leftTop << "\tleft bottom: " << leftBottom << "\tFLAP PERCENT: " << flapPercent << endl;
     
-    if(flapPercent < .33) {
+    //wingAngle
+    if(flapPercent < .33 & wingAngle > -15 && wingAngle < 15 ) {
         // wings up
         activeSprite = &sprites[17];
+        rollTimer = 1;
     }
-    else if ((flapPercent >= .33) && (flapPercent <= .66)) {
+    else if ((flapPercent >= .33) && (flapPercent <= .66) && wingAngle > -15 && wingAngle < 15 ) {
         // wings level
         activeSprite = &sprites[18];
+        rollTimer = 0;
     }
-    else if (flapPercent > .66) {
+    else if (flapPercent > .66 & wingAngle > -15 && wingAngle < 15 ) {
         // wings down
-        activeSprite = &sprites[19];        
+        activeSprite = &sprites[19];
+        rollTimer = 0;
+    }
+    else if( wingAngle <=-15 ){
+        activeSprite = &sprites[ int( rollTimer / 3 )];
+        rollTimer--;
+        if( rollTimer <= 0 ){
+            rollTimer = 45;
+        }
+    }
+    else if( wingAngle >= 15 ){
+        activeSprite = &sprites[ int( rollTimer / 3 ) ];
+        rollTimer++;
+        if( rollTimer >= 45 ){
+            rollTimer = 0;
+        }
     }
     
     // loop the toaster

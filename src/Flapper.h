@@ -26,6 +26,7 @@ public:
     
 private:
     int color;
+    int rollTimer;
     
     void flapUp();
     void flapDown();

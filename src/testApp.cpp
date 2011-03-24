@@ -13,10 +13,10 @@ void testApp::setup() {
 	context.toggleMirror();	
 	
     // control panel
-	panel.setup("Control Panel", ofGetWidth() - 315, 5, 300, 600);	
+	panel.setup("Control Panel", ofGetWidth() - 315, 5, 300, 200);	
 	panel.addPanel("Physics");	
-	panel.addSlider("flap power", "flapPower", 7.7, 0, 10, false);
-	panel.addSlider("gravity", "gravity", .83, 0, 5, false);    
+	panel.addSlider("flap power", "flapPower", 2.3, 0, 10, false);
+	panel.addSlider("gravity", "gravity", .14, 0, 5, false);    
     
     
     // create flappers
@@ -84,12 +84,12 @@ void testApp::draw() {
 	ofSetLineWidth(1);
 	ofSetColor(255, 255, 255);
 	
-	depth.draw(0, 0, 640, 480);
+//	depth.draw(0, 0, 640, 480);
 	user.draw();
     
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_DST_COLOR, GL_ZERO);
-	user.drawUserMasks(0, 0);
+//	user.drawUserMasks(0, 0);
 	glDisable(GL_BLEND);    
     
     
