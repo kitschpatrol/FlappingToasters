@@ -12,18 +12,18 @@ void testApp::setup() {
 	depth.toggleRegisterViewport(&rgb);
 	context.toggleMirror();	
 	
+    // control panel
+	panel.setup("Control Panel", ofGetWidth() - 315, 5, 300, 600);	
+	panel.addPanel("Physics");	
+	panel.addSlider("flap power", "flapPower", 7.7, 0, 10, false);
+	panel.addSlider("gravity", "gravity", .83, 0, 5, false);    
+    
+    
     // create flappers
     flappers = new Flapper[15];    
     
     
-    //	accordionSample.loadSound("27355__junggle__accordeon_21.wav");
-    //	accordionSample.setMultiPlay(true);
-    //	
-    //	accordionBreath.loadSound("19866__kostasvomvolos__breath_7.wav");
-
-
-    
-
+    valkyries.loadSound("valkyries.wav");
 }
 
 void testApp::update() {
@@ -32,20 +32,39 @@ void testApp::update() {
 	ofSoundUpdate();
 	
 	// find the hands via openni
+    
 	for (int i = 0; i < user.getTrackedUsers().size(); i++) {
 		ofxTrackedUser* tracked = user.getTrackedUser(i);
         
+
+
         
         
         if (tracked != NULL && tracked->left_lower_arm.found && tracked->right_lower_arm.found) {
+
+            if(!valkyries.getIsPlaying()) {
+                valkyries.play();
+            }            
+            
             
             cout << "Tracked hands of user: " << tracked->id << endl;            
             flappers[tracked->id - 1].updateHands(tracked->left_lower_arm.end, tracked->right_lower_arm.end);
         }
 	}
     
+    
+    if (user.getTrackedUsers().size() == 0) {
+        if (valkyries.getIsPlaying()) {
+            valkyries.stop();
+            valkyries.setPosition(0.0);
+        }             
+    }
+    
     // update the flappers
     for (int i = 0; i < 15; i++) {
+        
+        flappers[i].flapPower = panel.getValueF("flapPower");
+        flappers[i].gravity = panel.getValueF("gravity");
         flappers[i].update();
     }
 }
@@ -94,7 +113,7 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-    accordionSample.play();	
+    
 }
 
 //--------------------------------------------------------------

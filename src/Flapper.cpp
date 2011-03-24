@@ -28,15 +28,33 @@ Flapper::Flapper() {
     ay = 0;
     
     gravity = 0.2;
+    
+    color = round(ofRandom(0, 255));
+    
+    flap1.loadSound("flap1.wav");
+    flap1.setMultiPlay(true);
+    flap2.loadSound("flap2.wav");
+    flap2.setMultiPlay(true);    
+
 }
 
 void Flapper::flapUp() {
     cout << "FLAP UP" << endl;
-    vY -= 10;
+    vY -= flapPower;
+
+    if((rand() / RAND_MAX) > 0.5) {
+        flap1.play();
+    }
+    else {
+        flap2.play();        
+    }        
+    
 }
 
 void Flapper::flapDown() {
     cout << "FLAP DOWN" << endl;
+    
+
 }
 
 void Flapper::update() {
@@ -51,11 +69,10 @@ void Flapper::update() {
         y = ofGetHeight();
         vY = 0;
     }
-    
 }
 
 void Flapper::draw() {
-    ofSetColor(255, 0, 0);
+    ofSetColor(color, color, color);
     ofCircle(ofGetWidth() / 2, y, 20);
     
 }
@@ -118,7 +135,7 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
         leftFlapSpeed = (float)leftFlapSize / (ofGetElapsedTimeMillis() - leftFlapReversalTime);
         leftFlapReversalTime = ofGetElapsedTimeMillis();
         
-        flapDown();
+        flapUp();  
     }
     
     if ((averageLeftVelocity <= velocityThreshold) && (lastAverageLeftVelocity > velocityThreshold)) {
@@ -126,8 +143,8 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
         leftBottom = leftHand.y;
         leftFlapSpeed = (float)leftFlapSize / (ofGetElapsedTimeMillis() - leftFlapReversalTime);
         leftFlapReversalTime = ofGetElapsedTimeMillis();     
-        
-        flapUp();        
+        flapDown();        
+      
     }                
     
     if ((averageRightVelocity >= velocityThreshold) && (lastAverageRightVelocity < velocityThreshold)) {
@@ -135,8 +152,8 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
         rightTop = rightHand.y;
         rightFlapSpeed = (float)rightFlapSize / (ofGetElapsedTimeMillis() - rightFlapReversalTime);
         rightFlapReversalTime = ofGetElapsedTimeMillis();
+        flapUp();          
         
-        flapDown();        
     }
     
     if ((averageRightVelocity <= velocityThreshold) && (lastAverageRightVelocity > velocityThreshold)) {
@@ -144,8 +161,8 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
         rightBottom = rightHand.y;
         rightFlapSpeed = (float)rightFlapSize / (ofGetElapsedTimeMillis() - rightFlapReversalTime);
         rightFlapReversalTime = ofGetElapsedTimeMillis();
-        
-        flapUp();        
+        flapDown();        
+      
     }
     
     // store last for comparison on next frame

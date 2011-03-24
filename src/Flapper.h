@@ -10,20 +10,19 @@
 
 #include "stdio.h"
 #include "ofMain.h"
+#include "Mover.h"
 
-class Flapper {
+class Flapper : public Mover {
 public:
 	
 	Flapper();
+    virtual void update();
+    virtual void draw();    
     void updateHands(ofPoint leftHand, ofPoint rightHand);
-    void update();
-    void draw();
+    float flapPower;
     
 private:
-    float x, y;
-    float vX, vY;
-    float ax, ay;
-    float gravity;
+    int color;
     
     void flapUp();
     void flapDown();
@@ -47,5 +46,8 @@ private:
     float leftFlapSpeed, rightFlapSpeed;    
     int leftFlapReversalTime, rightFlapReversalTime; // time when we last reversed    
 
+    // sound fx
+    ofSoundPlayer flap1;
+    ofSoundPlayer flap2;    
 
 };

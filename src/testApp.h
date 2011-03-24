@@ -5,7 +5,7 @@
 #include "ofMain.h"
 #include "ofxOpenNI.h"
 #include "Flapper.h"
-
+#include "ofxAutoControlPanel.h"
 
 class testApp : public ofBaseApp{
     
@@ -29,12 +29,11 @@ public:
     
     Flapper * flappers;
     
-    int playDelay;
-    int lastPlay;
-    ofSoundPlayer accordionSample;	
-    ofSoundPlayer accordionBreath;
+	ofxAutoControlPanel panel;    
     ofSoundPlayer valkyries;
-    ofSoundPlayer flap;
+    
+
+
     
 };
 
