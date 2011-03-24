@@ -25,7 +25,7 @@ Flapper::Flapper() {
     y = 0;
     
     vX = 0;
-    vY = 0;
+    vY = 0.5;
     
     ax = 0;
     ay = 0;
@@ -59,8 +59,12 @@ Flapper::Flapper() {
 
 void Flapper::flapUp() {
     cout << "FLAP UP" << endl;
-    vY -= flapPower;
+    
 
+    vY = 0.5;
+    vY -= flapPower;
+    cout << vY << endl;
+    
     if((rand() / RAND_MAX) > 0.5) {
         flap1.play();
     }
@@ -79,34 +83,40 @@ void Flapper::flapDown() {
 void Flapper::update() {
     x += vX;
     y += vY;
-
+    
+    
     
     // ground
     if (y > (ofGetHeight() - activeSprite->getHeight())) {
-        y = ofGetHeight() - activeSprite->getHeight();
-        vY = 0;
+        y = -activeSprite->getHeight();
+        //y = ofGetHeight() - activeSprite->getHeight();
+        //vY = 0;
     }
     
     if(active && ((ofGetElapsedTimeMillis() - timeLastHandUpdate) > gracePeriod)) {
         active = false;
         cout << " GRACE PERIOD IS OVER " << endl;
+        activeSprite = &sprites[6];
     }
     
     if(active) {
         vX = -1;
-        vY += gravity;        
+        vY += gravity;
+        if( vY > 3.0 ){
+            vY = 3.0;
+        }
     }
     else {
         vX = 0;
-        activeSprite = &sprites[0];
+        vY = 0;
+        activeSprite = &sprites[6];
     }
     
     // which third of the arc are we in
-    
 
     float flapPercent = ofMap(leftCurrent, leftTop + .001, leftBottom + .002, 0, 1);
     
-    if(active) cout << "Left Current: " << leftCurrent << "\tLeft Top: " << leftTop << "\tleft bottom: " << leftBottom << "\tFLAP PERCENT: " << flapPercent << endl;
+    //if(active) cout << "Left Current: " << leftCurrent << "\tLeft Top: " << leftTop << "\tleft bottom: " << leftBottom << "\tFLAP PERCENT: " << flapPercent << endl;
     
     //wingAngle
     if(flapPercent < .33 & wingAngle > -15 && wingAngle < 15 ) {
@@ -125,17 +135,21 @@ void Flapper::update() {
         rollTimer = 0;
     }
     else if( wingAngle <=-15 ){
-        activeSprite = &sprites[ int( rollTimer / 3 )];
-        rollTimer--;
-        if( rollTimer <= 0 ){
-            rollTimer = 45;
-        }
-    }
-    else if( wingAngle >= 15 ){
         activeSprite = &sprites[ int( rollTimer / 3 ) ];
+        x+=2;
+        y+=2;
         rollTimer++;
         if( rollTimer >= 45 ){
             rollTimer = 0;
+        }
+    }
+    else if( wingAngle >= 15 ){
+        activeSprite = &sprites[ int( rollTimer / 3 )];
+        x-=2;
+        y-=2;
+        rollTimer--;
+        if( rollTimer <= 0 ){
+            rollTimer = 45;
         }
     }
     

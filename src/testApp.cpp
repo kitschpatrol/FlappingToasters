@@ -40,10 +40,6 @@ void testApp::update() {
 	for (int i = 0; i < user.getTrackedUsers().size(); i++) {
 		ofxTrackedUser* tracked = user.getTrackedUser(i);
         
-
-
-        
-        
         if (tracked != NULL && tracked->left_lower_arm.found && tracked->right_lower_arm.found) {
 
             if(!valkyries.getIsPlaying()) {
@@ -51,7 +47,7 @@ void testApp::update() {
             }            
             
             
-            cout << "Tracked hands of user: " << tracked->id << endl;            
+            //cout << "Tracked hands of user: " << tracked->id << endl;            
             flappers[tracked->id - 1].updateHands(tracked->left_lower_arm.end, tracked->right_lower_arm.end);
         }
 	}
@@ -89,7 +85,7 @@ void testApp::draw() {
     
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_DST_COLOR, GL_ZERO);
-//	user.drawUserMasks(0, 0);
+	user.drawUserMasks(0, 0);
 	glDisable(GL_BLEND);    
     
     
