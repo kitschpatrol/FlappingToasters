@@ -37,6 +37,15 @@ public:
     int lastPlay;
     ofSoundPlayer accordionSample;	
     ofSoundPlayer accordionBreath;
+    ofSoundPlayer valkyries;
+    ofSoundPlayer flap;
+    
+    
+    float lastAverageRightVelocity, lastAverageLeftVelocity;
+    float averageRightVelocity, averageLeftVelocity;    
+    ofPoint averageLeftPoint, averageRightPoint;
+    
+    float rightDistance, leftDistance, oldLeftDistance, oldRightDistance, leftTop, leftBottom, rightTop, rightBottom, oldRightTop, oldRightBottom, maintainRightTop, maintainRightBottom,  leftVelocity, rightVelocity, leftFlapSize, rightFlapSize;
     
 };
 

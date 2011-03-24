@@ -13,14 +13,20 @@ void testApp::setup() {
 	context.toggleMirror();	
 	
     
-	accordionSample.loadSound("27355__junggle__accordeon_21.wav");
-	accordionSample.setMultiPlay(true);
-	
-	accordionBreath.loadSound("19866__kostasvomvolos__breath_7.wav");
+    
+    
+    //	accordionSample.loadSound("27355__junggle__accordeon_21.wav");
+    //	accordionSample.setMultiPlay(true);
+    //	
+    //	accordionBreath.loadSound("19866__kostasvomvolos__breath_7.wav");
 	
 	handHistoryDepth = 10; // store the last 10 hand positions, newest first
-	playDelay = 10; // frames between cues
-	lastPlay = 0;
+    //	playDelay = 10; // frames between cues
+    //	lastPlay = 0;
+    
+    
+    averageRightVelocity = 0;
+    lastAverageRightVelocity = 0;
 }
 
 void testApp::update() {
@@ -54,33 +60,102 @@ void testApp::update() {
 	
 	if (rightHandHistory.size() > handHistoryDepth) {
 		rightHandHistory.pop_back();
-	}	
+	}
+    
+    if( user.getTrackedUsers().size() > 0 ){
+        
+        
+        // Find average velocity
+        float leftVelocityAccumulator = 0;
+        float rightVelocityAccumulator = 0;
+        ofPoint leftPointAccumulator;
+        ofPoint rightPointAccumulator;
+        
+        for (int i = 0; i < handHistoryDepth - 1; i++) {
+            leftVelocityAccumulator += leftHandHistory[i].y - leftHandHistory[i + 1].y;            
+            rightVelocityAccumulator += rightHandHistory[i].y - rightHandHistory[i + 1].y;
+
+            leftPointAccumulator.x += leftHandHistory[i].x;
+            leftPointAccumulator.y += leftHandHistory[i].y;
+            
+            rightPointAccumulator.x += rightHandHistory[i].x;
+            rightPointAccumulator.y += rightHandHistory[i].y;            
+        }
+
+        averageLeftVelocity = leftVelocityAccumulator / (handHistoryDepth - 1);        
+        averageRightVelocity = rightVelocityAccumulator / (handHistoryDepth - 1);
+
+        averageLeftPoint.x = leftPointAccumulator.x / (handHistoryDepth - 1);
+        averageLeftPoint.y = leftPointAccumulator.y / (handHistoryDepth - 1);
+
+        averageRightPoint.x = rightPointAccumulator.x / (handHistoryDepth - 1);
+        averageRightPoint.y = rightPointAccumulator.y / (handHistoryDepth - 1);
+        
+        // determine direction
+        float velocityThreshold = 5;
+        
+        if ((averageLeftVelocity >= velocityThreshold) && (lastAverageLeftVelocity < velocityThreshold)) {
+            cout << "Left Starting down" << endl;
+            leftTop = leftHand.y;
+        }
+        
+        if ((averageLeftVelocity <= velocityThreshold) && (lastAverageLeftVelocity > velocityThreshold)) {
+            cout << "Left Starting up" << endl;
+            leftBottom = leftHand.y;
+        }                
+        
+        if ((averageRightVelocity >= velocityThreshold) && (lastAverageRightVelocity < velocityThreshold)) {
+            cout << "Right Starting down" << endl;
+            rightTop = rightHand.y;
+        }
+        
+        if ((averageRightVelocity <= velocityThreshold) && (lastAverageRightVelocity > velocityThreshold)) {
+            cout << "Right Starting up" << endl;
+            rightBottom = rightHand.y;
+        }
+
+        // store last for comparison on next frame
+        lastAverageRightVelocity = averageRightVelocity;
+        lastAverageLeftVelocity = averageLeftVelocity;
+    
+        // calculate size of latest flap
+        leftFlapSize = abs(leftTop - leftBottom);
+        rightFlapSize = abs(rightTop - rightBottom);
+        
+        // figure out flap angle
+        
+        float wingAngle = atan2(averageRightPoint.y - averageLeftPoint.y, averageRightPoint.x - averageLeftPoint.x) * 180 / PI;
+        
+
+        cout << "Left Spread: " << leftFlapSize << "\tLeft Top: " << leftTop << "\tLeft Bottom: " << leftBottom << "\tWing Angle: " << wingAngle << endl;
+    }
+    
     
 	// find hand velocity (positive is "apart" negative is "together")
 	
-	float distance = ofDist(leftHand.x, leftHand.y, rightHand.x, rightHand.y);
-	float lastDistance = ofDist(leftHandHistory[1].x, leftHandHistory[1].y, rightHandHistory[1].x, rightHandHistory[1].y);
+    //	float distance = ofDist(leftHand.x, leftHand.y, rightHand.x, rightHand.y);
+    //	float lastDistance = ofDist(leftHandHistory[1].x, leftHandHistory[1].y, rightHandHistory[1].x, rightHandHistory[1].y);
+    //	
+    //    
+    //	float velocity = distance - lastDistance;
 	
+    //	cout << "VELOCITY: " << velocity << endl;
+	
+    //	if ((velocity < -5) && ((ofGetFrameNum() - lastPlay) > playDelay)) {
+    //		lastPlay = ofGetFrameNum();
+    //        accordionSample.play();	
+    //        accordionSample.setSpeed(ofMap(leftHand.y, 0, 480, 2, .3));
+    //        
+    //	}
+    //	
+    //	if (velocity > 5) {
+    //		if(!accordionBreath.getIsPlaying()) {
+    //			accordionBreath.play();	
+    //		}
+    //	}	
     
-	
-	float velocity = distance - lastDistance;
-	
-	cout << "VELOCITY: " << velocity << endl;
-	
-	if ((velocity < -5) && ((ofGetFrameNum() - lastPlay) > playDelay)) {
-		lastPlay = ofGetFrameNum();
-        accordionSample.play();	
-        accordionSample.setSpeed(ofMap(leftHand.y, 0, 480, 2, .3));
-        
-	}
-	
-	if (velocity > 5) {
-		if(!accordionBreath.getIsPlaying()) {
-			accordionBreath.play();	
-		}
-	}	
     
-
+    
     //	// log hand histories, for debug
     //	cout << "LEFT: ";
     //	for (int i = 0; i < leftHandHistory.size(); i++) {
@@ -106,8 +181,8 @@ void testApp::draw() {
 	ofSetColor(255, 0, 0);
 	ofCircle(leftHand.x, leftHand.y, 10);
 	ofCircle(rightHand.x, rightHand.y, 10);				
-	ofSetLineWidth(200);
-	ofLine(leftHand.x, leftHand.y, rightHand.x, rightHand.y);
+    //	ofSetLineWidth(200);
+    //	ofLine(leftHand.x, leftHand.y, rightHand.x, rightHand.y);
     
 }
 
