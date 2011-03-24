@@ -41,8 +41,10 @@ Flapper::Flapper() {
 
     flap2.loadSound("flap2.wav");
     flap2.setVolume(0.5);    
-    flap2.setMultiPlay(true); 
-
+    flap2.setMultiPlay(true);
+    
+    toastPop.loadSound("toaster.wav");
+    toastPop.setMultiPlay(true);
     
     // load images
     spriteCount = 20;
@@ -55,6 +57,9 @@ Flapper::Flapper() {
     activeSprite = &sprites[18];    
     
     gracePeriod = 5 * 1000;
+    
+    minFlapInterval = 100; // 100 frames between flaps
+    lastFlapFrame = ofGetFrameNum();
 
 }
 
@@ -65,18 +70,22 @@ void Flapper::flapUp() {
     vY = 0.5;
     vY -= flapPower;
     //cout << vY << endl;
+        
     
+}
+
+void Flapper::flapDown() {
+    //cout << "FLAP DOWN" << endl;
+}
+
+void Flapper::flap() {
+    // play sound
     if((rand() / RAND_MAX) > 0.5) {
         flap1.play();
     }
     else {
         flap2.play();        
     }        
-    
-}
-
-void Flapper::flapDown() {
-    //cout << "FLAP DOWN" << endl;
 }
 
 void Flapper::clapIn(){
@@ -89,6 +98,10 @@ void Flapper::clapIn(){
         pop.popStage = 0;
         toastPops.push_back( pop );
         timeLastToastPop = ofGetElapsedTimeMillis();
+        
+        // play the sound
+        toastPop.play();
+        
     }
 }
 
@@ -138,6 +151,7 @@ void Flapper::update() {
     float flapPercent = ofMap(leftCurrentY, leftTop + .001, leftBottom + .002, 0, 1);
     
     //if(active) cout << "Left Current: " << leftCurrentY << "\tLeft Top: " << leftTop << "\tleft bottom: " << leftBottom << "\tFLAP PERCENT: " << flapPercent << endl;
+    
     
     //wingAngle
     if(flapPercent < .33 & wingAngle > -15 && wingAngle < 15 ) {
@@ -251,6 +265,8 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
     rightCurrentX = rightHand.x;
     rightCurrentY = rightHand.y;    
     
+    bool flapped = false;
+    
     if ((averageLeftVelocityY >= velocityThreshold) && (lastAverageLeftVelocityY < velocityThreshold)) {
         //cout << "Left Starting down" << endl;
         
@@ -259,7 +275,8 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
         leftFlapSpeed = (float)leftFlapSize / (ofGetElapsedTimeMillis() - leftFlapReversalTime);
         leftFlapReversalTime = ofGetElapsedTimeMillis();
         
-        flapUp();  
+        flapUp();
+        flapped = true;
     }
     
     if ((averageLeftVelocityY <= velocityThreshold) && (lastAverageLeftVelocityY > velocityThreshold)) {
@@ -268,7 +285,7 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
         leftFlapSpeed = (float)leftFlapSize / (ofGetElapsedTimeMillis() - leftFlapReversalTime);
         leftFlapReversalTime = ofGetElapsedTimeMillis();     
         flapDown();        
-        
+        flapped = true;        
     }                
     
     if ((averageRightVelocityY >= velocityThreshold) && (lastAverageRightVelocityY < velocityThreshold)) {
@@ -277,7 +294,7 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
         rightFlapSpeed = (float)rightFlapSize / (ofGetElapsedTimeMillis() - rightFlapReversalTime);
         rightFlapReversalTime = ofGetElapsedTimeMillis();
         flapUp();          
-        
+        flapped = true;        
     }
     
     if ((averageRightVelocityY <= velocityThreshold) && (lastAverageRightVelocityY > velocityThreshold)) {
@@ -286,7 +303,13 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
         rightFlapSpeed = (float)rightFlapSize / (ofGetElapsedTimeMillis() - rightFlapReversalTime);
         rightFlapReversalTime = ofGetElapsedTimeMillis();
         flapDown();        
-        
+        flapped = true;        
+    }
+    
+    // singular flap
+    if(flapped && ((ofGetFrameNum() - lastFlapFrame) > minFlapInterval)) {
+        flap();
+        lastFlapFrame = ofGetFrameNum();        
     }
     
     // store last for comparison on next frame

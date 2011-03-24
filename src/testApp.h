@@ -35,6 +35,7 @@ public:
     Toast * toasts;
     vector<Toast> toastPops;
     
+    bool drawKinect;
 	ofxAutoControlPanel panel;    
     ofSoundPlayer valkyries;
     

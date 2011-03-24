@@ -17,7 +17,7 @@ void testApp::setup() {
 	panel.addPanel("Physics");	
 	panel.addSlider("flap power", "flapPower", 3.4, 0, 10, false);
 	panel.addSlider("gravity", "gravity", .14, 0, 5, false);    
-    
+    drawKinect = true;
     
     // create flappers
     flapperCount = 15;
@@ -36,12 +36,12 @@ void testApp::update() {
 	ofSoundUpdate();
 	
 	// find the hands via openni
-    
 	for (int i = 0; i < user.getTrackedUsers().size(); i++) {
 		ofxTrackedUser* tracked = user.getTrackedUser(i);
         
         if (tracked != NULL && tracked->left_lower_arm.found && tracked->right_lower_arm.found) {
 
+            // star the music
             if(!valkyries.getIsPlaying()) {
                 valkyries.play();
             }            
@@ -52,7 +52,7 @@ void testApp::update() {
         }
 	}
     
-    
+    // stop the music and seek to the beginning if no one is playing
     if (user.getTrackedUsers().size() == 0) {
         if (valkyries.getIsPlaying()) {
             valkyries.stop();
@@ -71,22 +71,12 @@ void testApp::update() {
         flappers[i].gravity = panel.getValueF("gravity");
         flappers[i].update();
     }
-    
-
 }
 
 
 void testApp::draw() {
-	ofSetLineWidth(1);
-	ofSetColor(255, 255, 255);
-	
-//	depth.draw(0, 0, 640, 480);
-	user.draw();
-    
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_DST_COLOR, GL_ZERO);
-	user.drawUserMasks(0, 0);
-	glDisable(GL_BLEND);    
+    ofBackground(0, 0, 0);
+    ofSetColor(255, 255, 255);
     
     
     ofEnableAlphaBlending();
@@ -102,6 +92,28 @@ void testApp::draw() {
 
     ofDisableAlphaBlending();
 
+    if (drawKinect) {
+        ofPushMatrix();
+        ofTranslate(ofGetWidth() - 320, ofGetHeight() - 240);
+        ofScale(0.5, 0.5);
+        
+        rgb.draw(0, 0, 640, 480);    
+        
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_DST_COLOR, GL_ZERO);
+        user.drawUserMasks(0, 0);
+        glDisable(GL_BLEND);    
+        
+        user.draw();    
+        
+        ofSetColor(255, 255, 255);
+        ofSetLineWidth(1);
+        ofNoFill();
+        ofRect(0, 0, 640, 480);
+        ofSetLineWidth(0);    
+        ofSetColor(255, 255, 255);    
+        ofPopMatrix();    
+    }
     
 
 }
@@ -111,6 +123,10 @@ void testApp::keyPressed(int key){
     if (key == 'f') {
         ofToggleFullscreen();
     }
+    
+    if (key == 'k') {
+        drawKinect = !drawKinect;
+    }    
 }
 
 

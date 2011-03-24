@@ -29,10 +29,15 @@ private:
     int color;
     int rollTimer;
     
+    void flap();
     void flapUp();
     void flapDown();
     void clapIn();
     void clapOut();
+    
+    
+    int minFlapInterval;
+    int lastFlapFrame;
     
     vector<Toast> toastPops;
     float timeLastToastPop;
@@ -65,6 +70,7 @@ private:
     // sound fx
     ofSoundPlayer flap1;
     ofSoundPlayer flap2;    
+    ofSoundPlayer toastPop;
     
     // sprites
     int spriteCount;
