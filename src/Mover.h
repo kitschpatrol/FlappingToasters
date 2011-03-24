@@ -17,9 +17,9 @@ class Mover {
     virtual void update();
     virtual void draw();
     float gravity;    
-
-protected:
     float x, y;
+    
+protected:
     float vX, vY;
     float ax, ay;    
 };

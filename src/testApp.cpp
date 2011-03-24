@@ -15,7 +15,7 @@ void testApp::setup() {
     // control panel
 	panel.setup("Control Panel", ofGetWidth() - 315, 5, 300, 200);	
 	panel.addPanel("Physics");	
-	panel.addSlider("flap power", "flapPower", 2.3, 0, 10, false);
+	panel.addSlider("flap power", "flapPower", 3.4, 0, 10, false);
 	panel.addSlider("gravity", "gravity", .14, 0, 5, false);    
     
     
@@ -25,7 +25,7 @@ void testApp::setup() {
     
     // create toast
     toastCount = 11;
-    toasts = new Toast[toastCount];        
+    toasts = new Toast[toastCount];
     
     valkyries.loadSound("valkyries.wav");
 }
@@ -99,6 +99,7 @@ void testApp::draw() {
     for (int i = 0; i < flapperCount; i++) {
         flappers[i].draw();
     }
+
     ofDisableAlphaBlending();
 
     

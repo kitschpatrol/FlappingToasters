@@ -17,7 +17,8 @@ Flapper::Flapper() {
     
     handHistoryDepth = 10; // store the last 10 hand positions, newest first
     
-    averageLeftVelocity, averageRightVelocity = 0;
+    averageLeftVelocityX, averageRightVelocityX = 0;
+    averageLeftVelocityY, averageRightVelocityY = 0;
     leftFlapReversalTime, rightFlapReversalTime = 0;
     leftFlapSpeed, rightFlapSpeed = 0;
 
@@ -63,7 +64,7 @@ void Flapper::flapUp() {
 
     vY = 0.5;
     vY -= flapPower;
-    cout << vY << endl;
+    //cout << vY << endl;
     
     if((rand() / RAND_MAX) > 0.5) {
         flap1.play();
@@ -75,15 +76,35 @@ void Flapper::flapUp() {
 }
 
 void Flapper::flapDown() {
-    cout << "FLAP DOWN" << endl;
-    
+    //cout << "FLAP DOWN" << endl;
+}
 
+void Flapper::clapIn(){
+    int toastingTime = 1 * 1000;
+    
+    if( ofGetElapsedTimeMillis() - timeLastToastPop > toastingTime ){
+        Toast pop;
+        pop.x = x - 75;
+        pop.y = y - 100;
+        pop.popStage = 0;
+        toastPops.push_back( pop );
+        timeLastToastPop = ofGetElapsedTimeMillis();
+    }
+}
+
+void Flapper::clapOut(){
+    //cout << "CLAP OUT" << endl;
 }
 
 void Flapper::update() {
     x += vX;
     y += vY;
     
+    if( toastPops.size() > 0 ){
+        for( int i = 0; i < toastPops.size(); i++ ){
+            toastPops[i].updatePops();
+        }
+    }
     
     
     // ground
@@ -114,9 +135,9 @@ void Flapper::update() {
     
     // which third of the arc are we in
 
-    float flapPercent = ofMap(leftCurrent, leftTop + .001, leftBottom + .002, 0, 1);
+    float flapPercent = ofMap(leftCurrentY, leftTop + .001, leftBottom + .002, 0, 1);
     
-    //if(active) cout << "Left Current: " << leftCurrent << "\tLeft Top: " << leftTop << "\tleft bottom: " << leftBottom << "\tFLAP PERCENT: " << flapPercent << endl;
+    //if(active) cout << "Left Current: " << leftCurrentY << "\tLeft Top: " << leftTop << "\tleft bottom: " << leftBottom << "\tFLAP PERCENT: " << flapPercent << endl;
     
     //wingAngle
     if(flapPercent < .33 & wingAngle > -15 && wingAngle < 15 ) {
@@ -163,8 +184,13 @@ void Flapper::update() {
 
 void Flapper::draw() {
     activeSprite->draw(x, y);
-    
+    for(int i = 0; i < toastPops.size(); i++ ){
+        toastPops[i].popToast();
+    }
 }
+
+
+
 
 void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
     
@@ -190,15 +216,15 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
 	}
     
     
-    // Find average velocity
-    float leftVelocityAccumulator = 0;
-    float rightVelocityAccumulator = 0;
+    // Find average velocity for up and down motion
+    float leftVelocityAccumulatorY = 0;
+    float rightVelocityAccumulatorY = 0;
     ofPoint leftPointAccumulator;
     ofPoint rightPointAccumulator;
     
     for (int i = 0; i < handHistoryDepth - 1; i++) {
-        leftVelocityAccumulator += leftHandHistory[i].y - leftHandHistory[i + 1].y;            
-        rightVelocityAccumulator += rightHandHistory[i].y - rightHandHistory[i + 1].y;
+        leftVelocityAccumulatorY += leftHandHistory[i].y - leftHandHistory[i + 1].y;            
+        rightVelocityAccumulatorY += rightHandHistory[i].y - rightHandHistory[i + 1].y;
         
         leftPointAccumulator.x += leftHandHistory[i].x;
         leftPointAccumulator.y += leftHandHistory[i].y;
@@ -207,23 +233,25 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
         rightPointAccumulator.y += rightHandHistory[i].y;            
     }
     
-    averageLeftVelocity = leftVelocityAccumulator / (handHistoryDepth - 1);        
-    averageRightVelocity = rightVelocityAccumulator / (handHistoryDepth - 1);
+    averageLeftVelocityY = leftVelocityAccumulatorY / (handHistoryDepth - 1);        
+    averageRightVelocityY = rightVelocityAccumulatorY / (handHistoryDepth - 1);
     
     averageLeftPoint.x = leftPointAccumulator.x / (handHistoryDepth - 1);
     averageLeftPoint.y = leftPointAccumulator.y / (handHistoryDepth - 1);
     
     averageRightPoint.x = rightPointAccumulator.x / (handHistoryDepth - 1);
     averageRightPoint.y = rightPointAccumulator.y / (handHistoryDepth - 1);
-
+    
     
     // determine direction
     float velocityThreshold = 5;
     
-    leftCurrent = leftHand.y;
-    rightCurrent = rightHand.y;    
+    leftCurrentX = leftHand.x;
+    leftCurrentY = leftHand.y;
+    rightCurrentX = rightHand.x;
+    rightCurrentY = rightHand.y;    
     
-    if ((averageLeftVelocity >= velocityThreshold) && (lastAverageLeftVelocity < velocityThreshold)) {
+    if ((averageLeftVelocityY >= velocityThreshold) && (lastAverageLeftVelocityY < velocityThreshold)) {
         //cout << "Left Starting down" << endl;
         
         //distance over time
@@ -234,16 +262,16 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
         flapUp();  
     }
     
-    if ((averageLeftVelocity <= velocityThreshold) && (lastAverageLeftVelocity > velocityThreshold)) {
+    if ((averageLeftVelocityY <= velocityThreshold) && (lastAverageLeftVelocityY > velocityThreshold)) {
         //cout << "Left Starting up" << endl;
         leftBottom = leftHand.y;
         leftFlapSpeed = (float)leftFlapSize / (ofGetElapsedTimeMillis() - leftFlapReversalTime);
         leftFlapReversalTime = ofGetElapsedTimeMillis();     
         flapDown();        
-      
+        
     }                
     
-    if ((averageRightVelocity >= velocityThreshold) && (lastAverageRightVelocity < velocityThreshold)) {
+    if ((averageRightVelocityY >= velocityThreshold) && (lastAverageRightVelocityY < velocityThreshold)) {
         //cout << "Right Starting down" << endl;
         rightTop = rightHand.y;
         rightFlapSpeed = (float)rightFlapSize / (ofGetElapsedTimeMillis() - rightFlapReversalTime);
@@ -252,18 +280,18 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
         
     }
     
-    if ((averageRightVelocity <= velocityThreshold) && (lastAverageRightVelocity > velocityThreshold)) {
+    if ((averageRightVelocityY <= velocityThreshold) && (lastAverageRightVelocityY > velocityThreshold)) {
         //cout << "Right Starting up" << endl;
         rightBottom = rightHand.y;
         rightFlapSpeed = (float)rightFlapSize / (ofGetElapsedTimeMillis() - rightFlapReversalTime);
         rightFlapReversalTime = ofGetElapsedTimeMillis();
         flapDown();        
-      
+        
     }
     
     // store last for comparison on next frame
-    lastAverageRightVelocity = averageRightVelocity;
-    lastAverageLeftVelocity = averageLeftVelocity;
+    lastAverageRightVelocityY = averageRightVelocityY;
+    lastAverageLeftVelocityY = averageLeftVelocityY;
     
     // calculate size of latest flap
     leftFlapSize = abs(leftTop - leftBottom);
@@ -273,4 +301,77 @@ void Flapper::updateHands(ofPoint leftHand, ofPoint rightHand) {
     wingAngle = atan2(averageRightPoint.y - averageLeftPoint.y, averageRightPoint.x - averageLeftPoint.x) * 180 / PI;
     
     //cout << "Left Spread: " << leftFlapSize << "\tLeft Top: " << leftTop << "\tLeft Bottom: " << leftBottom << "\tLeft Speed: " << leftFlapSpeed << "\tWing Angle: " << wingAngle << endl;    
+
+    
+    // Find average velocity for in and out motion
+    float leftVelocityAccumulatorX = 0;
+    float rightVelocityAccumulatorX = 0;
+    
+    for (int i = 0; i < handHistoryDepth - 1; i++) {
+        leftVelocityAccumulatorX += leftHandHistory[i].x - leftHandHistory[i + 1].x;            
+        rightVelocityAccumulatorX += rightHandHistory[i].x - rightHandHistory[i + 1].x;
+    }
+    
+    averageLeftVelocityX = leftVelocityAccumulatorX / (handHistoryDepth - 1);        
+    averageRightVelocityX = rightVelocityAccumulatorX / (handHistoryDepth - 1);
+    
+    // determine direction
+    velocityThreshold = 10;
+    
+    leftCurrentX = leftHand.x;
+    leftCurrentY = leftHand.y;
+    rightCurrentX = rightHand.x;
+    rightCurrentY = rightHand.y;    
+    
+    if ((averageLeftVelocityX >= velocityThreshold) && (lastAverageLeftVelocityX < velocityThreshold)) {
+        cout << "Left clapping" << endl;
+        
+        //distance over time
+        leftInner = leftHand.x;            
+        leftClapSpeed = (float)leftClapSize / (ofGetElapsedTimeMillis() - leftClapReversalTime);
+        leftClapReversalTime = ofGetElapsedTimeMillis();
+        
+        clapIn();  
+    }
+    
+    if ((averageLeftVelocityX <= velocityThreshold) && (lastAverageLeftVelocityX > velocityThreshold)) {
+        cout << "Left not" << endl;
+        leftOuter = leftHand.x;
+        leftClapSpeed = (float)leftClapSize / (ofGetElapsedTimeMillis() - leftClapReversalTime);
+        leftClapReversalTime = ofGetElapsedTimeMillis();     
+        
+        clapOut();        
+        
+    }                
+    
+    if ((averageRightVelocityX >= velocityThreshold) && (lastAverageRightVelocityX < velocityThreshold)) {
+        cout << "Right clapping" << endl;
+        rightInner = rightHand.x;
+        rightClapSpeed = (float)rightClapSize / (ofGetElapsedTimeMillis() - rightClapReversalTime);
+        rightClapReversalTime = ofGetElapsedTimeMillis();
+        
+        //clapIn();          
+        
+    }
+    
+    if ((averageRightVelocityX <= velocityThreshold) && (lastAverageRightVelocityX > velocityThreshold)) {
+        cout << "Right not" << endl;
+        rightOuter = rightHand.x;
+        rightClapSpeed = (float)rightClapSize / (ofGetElapsedTimeMillis() - rightClapReversalTime);
+        rightClapReversalTime = ofGetElapsedTimeMillis();
+        
+        //clapOut();
+    }
+    
+    // store last for comparison on next frame
+    lastAverageRightVelocityX = averageRightVelocityX;
+    lastAverageLeftVelocityX = averageLeftVelocityX;
+    
+    // calculate size of latest flap
+    leftClapSize = abs(leftOuter - leftInner);
+    rightClapSize = abs(rightOuter - rightOuter);
+    
+    //    cout << "Left Spread: " << leftClapSize << "\tLeft Outer: " << leftOuter << "\tLeft Inner: " << leftInner << "\tLeft Speed: " << leftClapSpeed << endl;
+
+    
 }

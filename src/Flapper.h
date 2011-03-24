@@ -11,6 +11,7 @@
 #include "stdio.h"
 #include "ofMain.h"
 #include "Mover.h"
+#include "Toast.h"
 
 class Flapper : public Mover {
 public:
@@ -30,6 +31,11 @@ private:
     
     void flapUp();
     void flapDown();
+    void clapIn();
+    void clapOut();
+    
+    vector<Toast> toastPops;
+    float timeLastToastPop;
     
     // input
     ofPoint leftHand, rightHand;
@@ -40,16 +46,21 @@ private:
     vector<ofPoint> rightHandHistory;	    
     
     // flap tracking
-    float averageLeftVelocity, averageRightVelocity;    
-    float lastAverageLeftVelocity, lastAverageRightVelocity;    
+    float averageLeftVelocityX, averageRightVelocityX, averageLeftVelocityY, averageRightVelocityY;    
+    float lastAverageLeftVelocityX, lastAverageRightVelocityX, lastAverageLeftVelocityY, lastAverageRightVelocityY;    
     ofPoint averageLeftPoint, averageRightPoint;
     float wingAngle;
-    float leftCurrent, rightCurrent;
+    float leftCurrentX, rightCurrentX, leftCurrentY, rightCurrentY;
     float leftBottom, rightBottom;
     float leftTop, rightTop;
+    float leftOuter, rightOuter;
+    float leftInner, rightInner;
     float leftFlapSize, rightFlapSize;
-    float leftFlapSpeed, rightFlapSpeed;    
-    int leftFlapReversalTime, rightFlapReversalTime; // time when we last reversed    
+    float leftClapSize, rightClapSize;
+    float leftFlapSpeed, rightFlapSpeed;
+    float leftClapSpeed, rightClapSpeed;
+    int leftFlapReversalTime, rightFlapReversalTime; // time when we last reversed
+    int leftClapReversalTime, rightClapReversalTime;
 
     // sound fx
     ofSoundPlayer flap1;
@@ -59,5 +70,4 @@ private:
     int spriteCount;
     ofImage * sprites;
     ofImage * activeSprite;
-
 };

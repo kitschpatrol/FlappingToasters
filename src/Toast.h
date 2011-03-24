@@ -17,9 +17,14 @@ public:
 	
 	Toast();
     virtual void update();
-    virtual void draw();    
+    virtual void draw();
+    
+    int popStage;
+    
+    void updatePops();
+    void popToast();
     
 private:
     ofImage toastGraphic;
-    
+    ofImage *toastPopImage;
 };

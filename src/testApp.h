@@ -33,12 +33,10 @@ public:
     
     int toastCount;
     Toast * toasts;
+    vector<Toast> toastPops;
     
 	ofxAutoControlPanel panel;    
     ofSoundPlayer valkyries;
-    
-
-
     
 };
 
