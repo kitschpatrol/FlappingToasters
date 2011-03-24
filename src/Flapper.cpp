@@ -52,7 +52,7 @@ Flapper::Flapper() {
     // wings level by defaut
     activeSprite = &sprites[18];    
     
-    gracePeriod = 10 * 1000;
+    gracePeriod = 5 * 1000;
 
 }
 
@@ -103,21 +103,21 @@ void Flapper::update() {
     // which third of the arc are we in
     
 
-    float flapPercent = leftCurrent / (leftBottom - leftTop + .001);
+    float flapPercent = ofMap(leftCurrent, leftTop + .001, leftBottom + .002, 0, 1);
     
-    if(active) cout << "FLAP PERCENT: " << flapPercent << endl;
+    if(active) cout << "Left Current: " << leftCurrent << "\tLeft Top: " << leftTop << "\tleft bottom: " << leftBottom << "\tFLAP PERCENT: " << flapPercent << endl;
     
-    if(flapPercent < 33) {
-        // wings down
-        activeSprite = &sprites[19];
+    if(flapPercent < .33) {
+        // wings up
+        activeSprite = &sprites[17];
     }
-    else if ((flapPercent >= 33) && (flapPercent <= 66)) {
+    else if ((flapPercent >= .33) && (flapPercent <= .66)) {
         // wings level
         activeSprite = &sprites[18];
     }
-    else if (flapPercent > 66) {
-        // wings up
-        activeSprite = &sprites[17];        
+    else if (flapPercent > .66) {
+        // wings down
+        activeSprite = &sprites[19];        
     }
     
     // loop the toaster

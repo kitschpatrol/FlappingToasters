@@ -3261,7 +3261,7 @@
 				</dict>
 			</array>
 		</dict>
-		<string>{{0, 0}, {600, 578}}</string>
+		<string>{{0, 0}, {600, 600}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -5842,9 +5842,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>322647649.94570398</real>
-		<string>{1428, 1068}</string>
-		<string>{2296, 0}</string>
+		<real>322648487.23343998</real>
+		<string>{518, 715}</string>
+		<string>{610, 0}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -6476,7 +6476,7 @@
 				<integer>567</integer>
 			</dict>
 			<key>NS.time</key>
-			<real>322647644.94506103</real>
+			<real>322648011.19441599</real>
 		</dict>
 		<dict>
 			<key>$classes</key>
@@ -6487,7 +6487,7 @@
 			<key>$classname</key>
 			<string>NSDate</string>
 		</dict>
-		<string>Today at 4:20 AM</string>
+		<string>Today at 4:26 AM</string>
 		<integer>106</integer>
 		<string>openFrameworks</string>
 		<dict>
@@ -9494,10 +9494,10 @@
 				</dict>
 			</array>
 		</dict>
-		<real>322647649.94656003</real>
-		<string>{1428, 1068}</string>
-		<string>{2296, 0}</string>
-		<string>Flapper::update()</string>
+		<real>322648487.234124</real>
+		<string>{518, 715}</string>
+		<string>{610, 0}</string>
+		<string>Flapper::Flapper()</string>
 		<string>Xcode.IDEKit.EditorDocument.SourceCode</string>
 		<dict>
 			<key>$class</key>
@@ -9531,7 +9531,7 @@
 				</dict>
 			</array>
 		</dict>
-		<string>{{0, 0}, {1420, 648}}</string>
+		<string>{{0, 0}, {1420, 529}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -9703,7 +9703,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>298</real>
+		<real>250</real>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -9733,7 +9733,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>1121</real>
+		<real>1169</real>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -9802,7 +9802,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>298</real>
+		<real>250</real>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -9832,7 +9832,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>1121</real>
+		<real>1169</real>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -9901,7 +9901,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>670</real>
+		<real>551</real>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -9931,7 +9931,7 @@
 				</dict>
 			</array>
 		</dict>
-		<real>278</real>
+		<real>397</real>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -11503,7 +11503,7 @@
 				</dict>
 			</array>
 		</dict>
-		<string>{{0, 4}, {1680, 1024}}</string>
+		<string>{{-34, 4}, {1680, 1024}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -20781,9 +20781,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>322647649.94912601</real>
-		<string>{0, 845}</string>
-		<string>{1429, 0}</string>
+		<real>322648487.23625797</real>
+		<string>{0, 869}</string>
+		<string>{1428, 0}</string>
 		<string>Flapper.cpp</string>
 		<string>Flapper.cpp</string>
 		<dict>
@@ -20817,7 +20817,7 @@
 				</dict>
 			</array>
 		</dict>
-		<string>{{0, 0}, {600, 578}}</string>
+		<string>{{0, 0}, {600, 600}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
