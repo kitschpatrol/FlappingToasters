@@ -1,9 +1,8 @@
-#!/bin/sh
-#set -x
 in="install_name_tool -change "
 
+cd ../OpenNI_openFrameworks/openni/lib
 
-libs=(*)
+libs=(*.dylib)
 num_libs=${#libs[*]}
 
 for lib in *.dylib ; do 
@@ -12,23 +11,24 @@ for lib in *.dylib ; do
 	echo "${lib}"
 	echo "-------------------------------------------------"
 	lines=`otool -L  ${lib}`
-	for lib_name in ${lines} ; do 
+	echo ${lines}
+	for linked_name in ${lines} ; do 
 		for local_lib in ${libs[@]}; do
-			in=`echo ${lib_name} | grep -i ${local_lib}`
+			in=`echo ${linked_name} | grep -i ${local_lib}`
 			if [ "$in" != "" ] ; then
-				echo "${lib_name} -  ${local_lib}"
-				install_name_tool -change "${lib_name}" "@executable_path/../../../data/openni/lib/${local_lib}" ${lib}
-		 		echo  install_name_tool -change "${lib_name}" "@executable_path/../../../data/openni/lib/${local_lib}" ${lib}
+				check_id=`echo "${linked_name}" | grep -i "${lib}"`
+				
+				#install_name_tool -change "/opt/local/lib/libusb-1.0.0.dylib" "@executable_path/./../../../data/openni/lib/libusb-1.0.0.dylib" ${lib}
+				#echo install_name_tool -change "/opt/local/lib/libusb-1.0.0.dylib" "@executable_path/./../../../data/openni/lib/libusb-1.0.0.dylib" ${lib}
+				
+				if [ "$check_id" != "" ] ; then
+				 	install_name_tool -id  "@executable_path/./../../../data/openni/lib/${local_lib}" ${lib}
+					echo install_name_tool -id  "@executable_path/./../../../data/openni/lib/${local_lib}" ${lib}
+				else 
+					install_name_tool -change "${linked_name}" "@executable_path/./../../../data/openni/lib/${local_lib}" ${lib}
+					echo  install_name_tool -change "${linked_name}" "@executable_path/./../../../data/openni/lib/${local_lib}" ${lib}
+				fi 
 			fi	
 		done
-
-
-		#echo ${lib_name}
-		#echo "."
-		#match=$((echo "${lines}" grep -i ${libs[$i]}`))
-		#echo $lines
-		#echo ${libs[$i]}
-		#i=$(($i+1))
 	done
 done
-
