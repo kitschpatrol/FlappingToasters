@@ -60,6 +60,8 @@ Flapper::Flapper() {
     
     minFlapInterval = 100; // 100 frames between flaps
     lastFlapFrame = ofGetFrameNum();
+    
+    takePhoto = false;
 
 }
 
@@ -85,7 +87,9 @@ void Flapper::flap() {
     }
     else {
         flap2.play();        
-    }        
+    }
+    
+    takePhoto = true;
 }
 
 void Flapper::clapIn(){

@@ -66,7 +66,20 @@ void testApp::update() {
     }        
     
     // update the flappers
+    bool photoTaken = false;
     for (int i = 0; i < flapperCount; i++) {
+        
+        // is there a photo schedules?
+        if(flappers[i].takePhoto) {
+            flappers[i].takePhoto = false;
+            
+            // just take the photo once per loop
+            if(!photoTaken) {
+                rgb.saveImage();
+                photoTaken = true;
+            }
+        }
+        
         flappers[i].flapPower = panel.getValueF("flapPower");
         flappers[i].gravity = panel.getValueF("gravity");
         flappers[i].update();
@@ -97,7 +110,8 @@ void testApp::draw() {
         ofTranslate(ofGetWidth() - 320, ofGetHeight() - 240);
         ofScale(0.5, 0.5);
         
-        rgb.draw(0, 0, 640, 480);    
+        rgb.draw(0, 0, 640, 480);  
+        rgb.saveImage();        
         
         glEnable(GL_BLEND);
         glBlendFunc(GL_DST_COLOR, GL_ZERO);

@@ -24,6 +24,7 @@ public:
     bool active;
     int gracePeriod;
     int timeLastHandUpdate;
+    bool takePhoto;
     
 private:
     int color;
