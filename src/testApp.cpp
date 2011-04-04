@@ -10,8 +10,18 @@ void testApp::setup() {
 	rgb.setup(&context);
 	user.setup(&context);
 	
+    // using hand tracking went worse than expected
+	// hands.setup(&context);
+	// hands.setSmoothing(0.1);		// built in openni hand track smoothing...
+	// hands.setFilterFactors(0.1);	// custom smoothing/filtering (can also set per hand with setFilterFactor)...set them all to 0.1f to begin with    
+    
+	user.setSmoothing(0.1); // built in openni skeleton smoothing...
+	user.setUseMaskPixels(true);
+	user.setUseCloudPoints(false);    
+    
+    
 	context.toggleRegisterViewport();
-	context.toggleMirror();	
+	context.toggleMirror();
 	
     // control panel
 	panel.setup("Control Panel", ofGetWidth() - 315, 5, 300, 200);	
@@ -35,29 +45,42 @@ void testApp::update() {
 	ofSoundUpdate();
     
 	context.update();
-	user.update();
     depth.update();
     rgb.update();
-	
+	user.update();    
+
 	// find the hands via openni
-	for (int i = 0; i < user.getNumberOfTrackedUsers(); i++) {
+    
+    int pairsOfHandsFound = 0;
+    
+    // starts at 1...
+	for (int i = 1; i <= user.getNumberOfTrackedUsers(); i++) {
+
 		ofxTrackedUser* tracked = user.getTrackedUser(i);
         
-        if (tracked != NULL && tracked->left_lower_arm.found && tracked->right_lower_arm.found) {
+        if(tracked != NULL) {
+            cout << "Tracked is not null: " << tracked->id << endl;
+        }
+        
+        if ((tracked != NULL) && tracked->left_lower_arm.found && tracked->right_lower_arm.found) {
+            pairsOfHandsFound++;
             
-            // star the music
+            
+            // start the music
             if(!valkyries.getIsPlaying()) {
                 valkyries.play();
             }            
             
-            
-            //cout << "Tracked hands of user: " << tracked->id << endl;            
-            flappers[tracked->id - 1].updateHands(tracked->left_lower_arm.end_joint, tracked->right_lower_arm.end_joint);
+            cout << "Tracked hands of user: " << tracked->id << endl;
+            cout << "left hand: " << tracked->left_lower_arm.position[0].X << endl;
+            flappers[tracked->id - 1].updateHands(tracked->left_lower_arm.position[1], tracked->right_lower_arm.position[1]);
         }
 	}
     
+    cout << "Found " << pairsOfHandsFound << " pairs of hands." << endl;
+    
     // stop the music and seek to the beginning if no one is playing
-    if (user.getNumberOfTrackedUsers() == 0) {
+    if (pairsOfHandsFound == 0) {
         if (valkyries.getIsPlaying()) {
             valkyries.stop();
             valkyries.setPosition(0.0);
@@ -112,6 +135,7 @@ void testApp::draw() {
         glDisable(GL_BLEND);    
         
         user.draw();    
+        // hands.drawHands();
         
         ofSetColor(255, 255, 255);
         ofSetLineWidth(1);

@@ -12,6 +12,7 @@
 #include "ofMain.h"
 #include "Mover.h"
 #include "Toast.h"
+#include "XnTypes.h"
 
 class Flapper : public Mover {
 public:
@@ -19,7 +20,7 @@ public:
 	Flapper();
     virtual void update();
     virtual void draw();    
-    void updateHands(ofPoint leftHand, ofPoint rightHand);
+    void updateHands(XnPoint3D leftHand, XnPoint3D rightHand);
     float flapPower;
     bool active;
     int gracePeriod;
@@ -47,8 +48,8 @@ private:
     
     // hand history
     int handHistoryDepth;
-    vector<ofPoint> leftHandHistory;
-    vector<ofPoint> rightHandHistory;	    
+    vector<XnPoint3D> leftHandHistory;
+    vector<XnPoint3D> rightHandHistory;	    
     
     // flap tracking
     float averageLeftVelocityX, averageRightVelocityX, averageLeftVelocityY, averageRightVelocityY;    

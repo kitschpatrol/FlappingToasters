@@ -27,6 +27,7 @@ public:
     ofxDepthGenerator	depth;
     ofxImageGenerator	rgb;
     ofxUserGenerator	user;
+	//ofxHandGenerator	hands;    
     
     int flapperCount;
     Flapper * flappers;
