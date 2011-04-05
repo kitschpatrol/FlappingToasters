@@ -6,8 +6,8 @@ A final project for ITP's 3D Sensing and Visualization class.
 You embody a flying toaster. Strike the psi pose to get calibrated, and then start flapping. Tilt in either direction to do a barrel roll. Clap to release toast. Supports multiple players.
 
 **Interface**  
-Tab toggles the GUI
-K toggles the Kinect window
+Tab toggles the GUI  
+K toggles the Kinect window  
 F toggle full screen mode
 
 **Notes**  
