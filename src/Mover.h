@@ -1,11 +1,3 @@
-//
-//  Sprite.h
-//  flyingToasters
-//
-//  Created by Eric Mika on 3/24/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
-
 #pragma once
 
 #include "stdio.h"
@@ -18,6 +10,7 @@ class Mover {
     virtual void draw();
     float gravity;    
     float x, y;
+    void handleResize(int lastW, int lastH);
     
 protected:
     float vX, vY;

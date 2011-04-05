@@ -1,11 +1,3 @@
-//
-//  Flapper.cpp
-//  flyingToasters
-//
-//  Created by Eric Mika on 3/24/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
-
 #include "Flapper.h"
 
 Flapper::Flapper() {
@@ -113,18 +105,17 @@ void Flapper::update() {
     x += vX;
     y += vY;
     
-    if( toastPops.size() > 0 ){
-        for( int i = 0; i < toastPops.size(); i++ ){
+    if (toastPops.size() > 0) {
+        for( int i = 0; i < toastPops.size(); i++ ) {
             toastPops[i].updatePops();
         }
     }
     
-    
     // ground
     if (y > (ofGetHeight() - activeSprite->getHeight())) {
-        y = -activeSprite->getHeight();
-        //y = ofGetHeight() - activeSprite->getHeight();
-        //vY = 0;
+        y = ofGetHeight() - activeSprite->getHeight();
+        vY = 0;
+        vX = 0;
     }
     
     if(active && ((ofGetElapsedTimeMillis() - timeLastHandUpdate) > gracePeriod)) {

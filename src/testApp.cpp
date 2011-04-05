@@ -3,32 +3,30 @@ void testApp::setup() {
 	ofBackground(0, 0, 0);
 	ofSetFrameRate(60);
 	
-    
+    // set up kinect
     context.setup();
-    
 	depth.setup(&context);
 	rgb.setup(&context);
 	user.setup(&context);
 	
+    user.setSmoothing(0.1); // built in openni skeleton smoothing
+	user.setUseMaskPixels(true);
+	user.setUseCloudPoints(false);    
+
     // using hand tracking went worse than expected
 	// hands.setup(&context);
 	// hands.setSmoothing(0.1);		// built in openni hand track smoothing...
-	// hands.setFilterFactors(0.1);	// custom smoothing/filtering (can also set per hand with setFilterFactor)...set them all to 0.1f to begin with    
-    
-	user.setSmoothing(0.1); // built in openni skeleton smoothing...
-	user.setUseMaskPixels(true);
-	user.setUseCloudPoints(false);    
-    
+	// hands.setFilterFactors(0.1);	// custom smoothing/filtering (can also set per hand with setFilterFactor)...set them all to 0.1f to begin with        
     
 	context.toggleRegisterViewport();
-	context.toggleMirror();
-	
+	context.toggleMirror();	
+    
     // control panel
 	panel.setup("Control Panel", ofGetWidth() - 315, 5, 300, 200);	
 	panel.addPanel("Physics");	
 	panel.addSlider("flap power", "flapPower", 3.4, 0, 10, false);
-	panel.addSlider("gravity", "gravity", .14, 0, 5, false);    
-    drawKinect = true;
+	panel.addSlider("gravity", "gravity", .14, 0, 5, false);
+    panel.addToggle("show kinect", "drawKinect", true);
     
     // create flappers
     flapperCount = 15;
@@ -38,46 +36,39 @@ void testApp::setup() {
     toastCount = 11;
     toasts = new Toast[toastCount];
     
+    // music
     valkyries.loadSound("valkyries.wav");
 }
 
 void testApp::update() {
+    // update sound
 	ofSoundUpdate();
     
+    // update kinect
 	context.update();
     depth.update();
     rgb.update();
 	user.update();    
 
-	// find the hands via openni
-    
+	// find the hands via openni's skeleton tracking
     int pairsOfHandsFound = 0;
     
-    // starts at 1...
+    // tracked user IDs start at 1, not 0
 	for (int i = 1; i <= user.getNumberOfTrackedUsers(); i++) {
 
 		ofxTrackedUser* tracked = user.getTrackedUser(i);
         
-        if(tracked != NULL) {
-            cout << "Tracked is not null: " << tracked->id << endl;
-        }
-        
         if ((tracked != NULL) && tracked->left_lower_arm.found && tracked->right_lower_arm.found) {
             pairsOfHandsFound++;
-            
             
             // start the music
             if(!valkyries.getIsPlaying()) {
                 valkyries.play();
             }            
             
-            cout << "Tracked hands of user: " << tracked->id << endl;
-            cout << "left hand: " << tracked->left_lower_arm.position[0].X << endl;
             flappers[tracked->id - 1].updateHands(tracked->left_lower_arm.position[1], tracked->right_lower_arm.position[1]);
         }
 	}
-    
-    cout << "Found " << pairsOfHandsFound << " pairs of hands." << endl;
     
     // stop the music and seek to the beginning if no one is playing
     if (pairsOfHandsFound == 0) {
@@ -98,6 +89,9 @@ void testApp::update() {
         flappers[i].gravity = panel.getValueF("gravity");
         flappers[i].update();
     }
+    
+    lastWindowWidth = ofGetWidth();
+    lastWindowHeight = ofGetHeight();
 }
 
 
@@ -105,8 +99,9 @@ void testApp::draw() {
     ofBackground(0, 0, 0);
     ofSetColor(255, 255, 255);
     
-    
+    // draw the sprites
     ofEnableAlphaBlending();
+    
     // draw the toast
     for (int i = 0; i < toastCount; i++) {
         toasts[i].draw();
@@ -118,11 +113,10 @@ void testApp::draw() {
     }
     
     ofDisableAlphaBlending();
+
     
-    
-    
-    
-    if (drawKinect) {
+    // draw the interface    
+    if (panel.getValueB("drawKinect")) {
         ofPushMatrix();
         ofTranslate(ofGetWidth() - 320, ofGetHeight() - 240);
         ofScale(0.5, 0.5);
@@ -131,7 +125,7 @@ void testApp::draw() {
         
         glEnable(GL_BLEND);
         glBlendFunc(GL_DST_COLOR, GL_ZERO);
-        // method is gone ? user.drawUserMasks(0, 0);
+        // user.drawUserMasks(0, 0); // method is gone?
         glDisable(GL_BLEND);    
         
         user.draw();    
@@ -145,19 +139,24 @@ void testApp::draw() {
         ofSetColor(255, 255, 255);    
         ofPopMatrix();    
     }
-    
-    
 }
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
+    // toggle full screen
     if (key == 'f') {
         ofToggleFullscreen();
     }
     
+    // toggle the kinect
     if (key == 'k') {
-        drawKinect = !drawKinect;
-    }    
+        if(panel.getValueB("drawKinect")) {
+            panel.setValueB("drawKinect", false);
+        }
+        else {
+            panel.setValueB("drawKinect", true);            
+        }
+    }
 }
 
 
@@ -189,4 +188,23 @@ void testApp::mouseReleased(int x, int y, int button){
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
 	cout << "resized!" << endl;
+    cout << "Last size: " << lastWindowWidth << "\t" << lastWindowHeight << "\tNew Size: " << w << "\t" << h << endl;
+    
+    // resize everyone
+    // draw the toast
+    for (int i = 0; i < toastCount; i++) {
+        toasts[i].handleResize(lastWindowWidth, lastWindowHeight);
+    }    
+    
+    // draw the flappers
+    for (int i = 0; i < flapperCount; i++) {
+        flappers[i].handleResize(lastWindowWidth, lastWindowHeight);
+    }
+    
+    // reposition panel?
+    //panel.setPositoin(0, 0);
+    
+    lastWindowWidth = ofGetWidth();
+    lastWindowHeight = ofGetHeight();    
+    
 }
