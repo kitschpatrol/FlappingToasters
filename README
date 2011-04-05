@@ -5,6 +5,8 @@ A final project for ITP's 3D Sensing and Visualization class.
 
 Notes
 =====
+Uses a Kinect + OpenNI skeleton tracking to detect arm flapping.
+
 Built with openFrameworks 0062
 
 Compiled against gameoverhack's fork of ofxOpenNI:
