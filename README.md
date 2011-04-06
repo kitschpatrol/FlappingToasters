@@ -41,7 +41,7 @@ F toggle full screen mode
 
 - Sometimes ofxOpenNI freezes the keyboard on my laptop. External keyboards work fine. The rest of the machine continues to work fine.
 
-- Startup is slow. This is getting better with subsequent revisions of ofxOpenNI, but don't lose hope if it takes forever to start.
+- Startup is slow. This is getting better with subsequent revisions of ofxOpenNI, but don't lose hope if it takes forever to start. You'll also see disconcerting warnings like `Retrieving depth generator failed: No match found`. Persevere, they're not show-stoppers.
 
 - Initial wing flapping animation is glitchy until the flap-detection system has enough data to automatically calibrate itself.
 
