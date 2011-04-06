@@ -10,10 +10,10 @@ Tab toggles the GUI
 K toggles the Kinect window  
 F toggle full screen mode
 
-**Links**
-[Process Blog Post](http://frontiernerds.com/flapping-toasters)
-[Video](http://vimeo.com/kitschpatrol/flapping-toasters)
-[The Scarlet S](http://frontiernerds.com/scarlet-s)
+**Links**  
+[Process Blog Post](http://frontiernerds.com/flapping-toasters)  
+[Video](http://vimeo.com/kitschpatrol/flapping-toasters)  
+[The Scarlet S](http://frontiernerds.com/scarlet-s)  
 
 **Notes**  
 
