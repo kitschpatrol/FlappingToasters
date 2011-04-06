@@ -1,6 +1,6 @@
 **Flapping Toasters**  
-Developed by Michael Edgcumbe and Eric Mika in March 2011.
-A final project for ITP's 3D Sensing and Visualization class.
+Developed by [Michael Edgcumbe](http://www.neocyde.net/) and [Eric Mika](http://ericmika.com) in March 2011.
+A final project for [ITP](http://itp.nyu.edu/itp/)'s [3D Sensing and Visualization class](http://3dsav.blogspot.com/).
 
 **Interaction**  
 You embody a flying toaster. Strike the psi pose to get calibrated, and then start flapping. Tilt in either direction to do a barrel roll. Clap to release toast. Supports multiple players.
@@ -9,6 +9,11 @@ You embody a flying toaster. Strike the psi pose to get calibrated, and then sta
 Tab toggles the GUI  
 K toggles the Kinect window  
 F toggle full screen mode
+
+**Links**
+[Process Blog Post](http://frontiernerds.com/flapping-toasters)
+[Video](http://vimeo.com/kitschpatrol/flapping-toasters)
+[The Scarlet S](http://frontiernerds.com/scarlet-s)
 
 **Notes**  
 
@@ -37,7 +42,7 @@ F toggle full screen mode
 - Initial wing flapping animation is glitchy until the flap-detection system has enough data to automatically calibrate itself.
 
 **Thanks**  
-Thanks to Kyle McDonald and Zach Lieberman for creating the 3DSAV class.
+Thanks to [Kyle McDonald](http://kylemcdonald.net/) and [Zach Lieberman](http://thesystemis.com/) for creating the 3DSAV class.
 More student projects here: [http://3dsav.blogspot.com/](http://3dsav.blogspot.com/)
 
 Thanks to Wagner for the music.
