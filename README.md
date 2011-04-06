@@ -23,15 +23,19 @@ F toggle full screen mode
 
 - Compiled against [gameoverhack's fork of ofxOpenNI](https://github.com/gameoverhack/ofxOpenNI/commit/a1ec3ffea09bdbd644e57cc9f5c2a1c20a65f02c)
 
-- Should work on Linux / Windows, but I haven't tested and don't have IDE project files for those platforms. Sorry.
-
 - Inclues ofxControlPanel, which requires the ofxDirList addon.
+
+- Includes some of the new 3D convenience functions from OF 007, although they aren't put to use. See `src/utils/ofx3dGraphics.h`.
 
 - Xcode project file is for Xcode 4.
 
 - Binaries are Intel-only, for Mac OS X 10.6.
 
-- This project was renamed on github from FlyingKinectToasters to FlappingToasters on April 4th 2011.
+- This project was renamed on GitHub from FlyingKinectToasters to FlappingToasters on April 4th 2011. The old link is broken.
+
+- The project folder expects to be in a certain location relative to openFrameworks. Something like `~/Documents/openFrameworks0062/apps/examples/flappingToasters`
+
+- Should work on Linux / Windows, but I haven't tested and don't have IDE project files for those platforms. Sorry.
 
 **Problems**  
 
